@@ -9,7 +9,7 @@ const CATEGORY_COLORS = {
   equipment: { stroke: '#ec4899', fill: 'rgba(236, 72, 153, 0.2)', label: 'EQUIPMENT' }
 };
 
-const Visualizer = ({ image, annotation }) => {
+const Visualizer = ({ image, annotation, activeFilters = {} }) => {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -35,9 +35,12 @@ const Visualizer = ({ image, annotation }) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0);
 
-      // JSON Annotation 렌더링
       if (annotation && annotation.objects) {
+        // 필터링된 객체들만 렌더링
         annotation.objects.forEach(obj => {
+          // 해당 카테고리가 활성화되어 있을 때만 그림
+          if (activeFilters[obj.category] === false) return;
+
           const [xCenter, yCenter, width, height] = obj.bbox;
           const style = CATEGORY_COLORS[obj.category] || CATEGORY_COLORS.door;
 
@@ -46,16 +49,13 @@ const Visualizer = ({ image, annotation }) => {
           const w = width * canvas.width;
           const h = height * canvas.height;
 
-          // 박스 채우기 (면적 표시)
           ctx.fillStyle = style.fill;
           ctx.fillRect(x, y, w, h);
 
-          // 테두리 그리기
           ctx.strokeStyle = style.stroke;
           ctx.lineWidth = Math.max(2, canvas.width / 500);
           ctx.strokeRect(x, y, w, h);
 
-          // 라벨 태그
           ctx.fillStyle = style.stroke;
           const fontSize = Math.max(12, canvas.width / 70);
           ctx.font = `bold ${fontSize}px sans-serif`;
@@ -68,16 +68,11 @@ const Visualizer = ({ image, annotation }) => {
         });
       }
     };
-  }, [image, annotation]);
+  }, [image, annotation, activeFilters]);
 
   return (
-    <div ref={containerRef} className="w-full relative bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
-      <canvas ref={canvasRef} className="block mx-auto cursor-crosshair" />
-      {(!annotation || !annotation.objects.length) && (
-        <div className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-700">
-          <p className="text-[10px] text-slate-400 font-medium tracking-wider">NO ANNOTATIONS FOUND</p>
-        </div>
-      )}
+    <div ref={containerRef} className="w-full relative bg-slate-950 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+      <canvas ref={canvasRef} className="block mx-auto" />
     </div>
   );
 };
