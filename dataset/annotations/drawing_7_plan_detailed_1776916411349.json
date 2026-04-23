@@ -1,0 +1,69 @@
+{
+  "image_name": "drawing_7_plan_detailed_1776916411349.png",
+  "dimensions": {
+    "width": 1280,
+    "height": 768
+  },
+  "objects": [
+    {
+      "category": "door",
+      "label": "DOOR",
+      "bbox": [
+        0.615,
+        0.085,
+        0.04,
+        0.06
+      ]
+    },
+    {
+      "category": "door",
+      "label": "DOOR",
+      "bbox": [
+        0.585,
+        0.215,
+        0.04,
+        0.06
+      ]
+    },
+    {
+      "category": "door",
+      "label": "DOOR",
+      "bbox": [
+        0.435,
+        0.045,
+        0.05,
+        0.03
+      ]
+    },
+    {
+      "category": "window",
+      "label": "WINDOW",
+      "bbox": [
+        0.285,
+        0.065,
+        0.1,
+        0.02
+      ]
+    },
+    {
+      "category": "window",
+      "label": "WINDOW",
+      "bbox": [
+        0.685,
+        0.415,
+        0.15,
+        0.03
+      ]
+    },
+    {
+      "category": "window",
+      "label": "WINDOW",
+      "bbox": [
+        0.135,
+        0.555,
+        0.1,
+        0.02
+      ]
+    }
+  ]
+}

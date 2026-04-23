@@ -1,0 +1,13 @@
+{
+  "image_name": "ilustracion-planta-result-25.jpg",
+  "dimensions": { "width": 1024, "height": 724 },
+  "objects": [
+    { "category": "room", "label": "OFFICE (1)", "bbox": [0.25, 0.35, 0.15, 0.45] },
+    { "category": "room", "label": "DINING/KITCHEN (4)", "bbox": [0.5, 0.18, 0.25, 0.2] },
+    { "category": "furniture", "label": "BED", "bbox": [0.76, 0.13, 0.06, 0.08] },
+    { "category": "furniture", "label": "SOFA", "bbox": [0.2, 0.55, 0.08, 0.05] },
+    { "category": "equipment", "label": "TOILET", "bbox": [0.67, 0.35, 0.03, 0.04] },
+    { "category": "door", "label": "DOOR", "bbox": [0.725, 0.185, 0.03, 0.05] },
+    { "category": "window", "label": "WINDOW", "bbox": [0.45, 0.08, 0.6, 0.015] }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "image_name": "drawing_1_site_plan_1776916370392.png",
+  "dimensions": {
+    "width": 1280,
+    "height": 768
+  },
+  "objects": [
+    {
+      "category": "door",
+      "label": "DOOR",
+      "bbox": [
+        0.415,
+        0.115,
+        0.035,
+        0.045
+      ]
+    },
+    {
+      "category": "door",
+      "label": "DOOR",
+      "bbox": [
+        0.548,
+        0.485,
+        0.035,
+        0.045
+      ]
+    },
+    {
+      "category": "window",
+      "label": "WINDOW",
+      "bbox": [
+        0.215,
+        0.345,
+        0.085,
+        0.025
+      ]
+    }
+  ]
+}
