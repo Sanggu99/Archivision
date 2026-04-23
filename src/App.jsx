@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Dropzone from './components/Dropzone';
 import Gallery from './components/Gallery';
 import Visualizer from './components/Visualizer';
-import { X, RefreshCw, Layers, Database, Check, PieChart, Info, ClipboardList } from 'lucide-react';
+import { X, RefreshCw, Layers, Database, Check, PieChart, Info, ClipboardList, Ruler } from 'lucide-react';
 
 const CATEGORIES = [
   { id: 'room', name: 'ROOM', color: 'bg-amber-500' },
@@ -60,11 +60,17 @@ function App() {
 
   const selectedItem = data.find(d => d.id === selectedId);
 
-  // 데이터 분석 로직 (Feature 3)
+  // 면적 및 통계 분석 로직
   const getStats = () => {
     if (!selectedItem || !selectedItem.annotation) return null;
-    const objects = selectedItem.annotation.objects || [];
+    const anno = selectedItem.annotation;
+    const objects = anno.objects || [];
     
+    // 스케일 계산 (Feature 3 고도화)
+    // 예: reference_scale: { pixel_dist_norm: 0.9, real_dist_m: 6.06 }
+    const refScale = anno.reference_scale || { pixel_dist_norm: 1.0, real_dist_m: 10.0 };
+    const scaleFactor = refScale.real_dist_m / (refScale.pixel_dist_norm || 1.0);
+
     const stats = {
       total: objects.length,
       byCategory: {},
@@ -74,8 +80,15 @@ function App() {
     objects.forEach(obj => {
       stats.byCategory[obj.category] = (stats.byCategory[obj.category] || 0) + 1;
       if (obj.category === 'room') {
-        const areaRatio = obj.bbox[2] * obj.bbox[3]; // normalized area
-        stats.rooms.push({ label: obj.label, ratio: (areaRatio * 100).toFixed(1) });
+        const widthM = obj.bbox[2] * scaleFactor;
+        const heightM = obj.bbox[3] * scaleFactor;
+        const areaM2 = widthM * heightM;
+        
+        stats.rooms.push({ 
+          label: obj.label, 
+          area: areaM2.toFixed(1),
+          dim: `${widthM.toFixed(1)}m x ${heightM.toFixed(1)}m`
+        });
       }
     });
 
@@ -120,8 +133,8 @@ function App() {
                     <div>
                       <h3 className="text-xl font-bold text-white">{selectedItem.name}</h3>
                       <div className="flex items-center gap-2 mt-1">
-                        <Layers size={14} className="text-blue-400" />
-                        <span className="text-xs text-slate-400">Analysis Results Ready</span>
+                        <Ruler size={14} className="text-blue-400" />
+                        <span className="text-xs text-slate-400">Scale-based Area Analysis Active</span>
                       </div>
                     </div>
                   </div>
@@ -144,60 +157,62 @@ function App() {
 
               {/* Right Side: Analytics Dashboard (1/4) */}
               <div className="lg:col-span-1 space-y-6">
-                <div className="bg-slate-900/60 p-6 rounded-3xl border border-slate-800 backdrop-blur-xl h-full">
+                <div className="bg-slate-900/60 p-8 rounded-3xl border border-slate-800 backdrop-blur-xl h-full shadow-2xl">
                   <div className="flex items-center gap-3 mb-8">
-                    <div className="p-2 bg-violet-500/20 rounded-lg text-violet-400">
-                      <PieChart size={20} />
+                    <div className="p-2.5 bg-blue-500/20 rounded-xl text-blue-400">
+                      <PieChart size={22} />
                     </div>
-                    <h4 className="font-bold text-lg text-white">건축 데이터 분석</h4>
+                    <h4 className="font-bold text-xl text-white tracking-tight">건축 분석 대시보드</h4>
                   </div>
 
                   {stats ? (
                     <div className="space-y-8">
                       {/* Overall Stats */}
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/50">
-                          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Total Objects</p>
-                          <p className="text-2xl font-black text-white">{stats.total}</p>
+                        <div className="p-5 bg-slate-800/40 rounded-2xl border border-slate-700/50">
+                          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1.5">Total Objects</p>
+                          <p className="text-3xl font-black text-white">{stats.total}</p>
                         </div>
-                        <div className="p-4 bg-slate-800/50 rounded-2xl border border-slate-700/50">
-                          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mb-1">Categories</p>
-                          <p className="text-2xl font-black text-blue-400">{Object.keys(stats.byCategory).length}</p>
+                        <div className="p-5 bg-slate-800/40 rounded-2xl border border-slate-700/50">
+                          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1.5">Net Area</p>
+                          <p className="text-3xl font-black text-emerald-400">
+                            {stats.rooms.reduce((acc, r) => acc + parseFloat(r.area), 0).toFixed(1)}<span className="text-xs ml-1">㎡</span>
+                          </p>
                         </div>
                       </div>
 
-                      {/* Room Area Analysis */}
+                      {/* Room Area Measurement */}
                       <div>
-                        <div className="flex items-center gap-2 mb-4">
-                          <ClipboardList size={16} className="text-amber-500" />
-                          <h5 className="text-sm font-bold text-slate-300">실별 면적 비중 (%)</h5>
+                        <div className="flex items-center gap-2 mb-5">
+                          <Ruler size={18} className="text-amber-500" />
+                          <h5 className="text-sm font-bold text-slate-200">실별 측정 면적 (Calculated)</h5>
                         </div>
-                        <div className="space-y-3">
+                        <div className="space-y-4">
                           {stats.rooms.map((room, idx) => (
-                            <div key={idx} className="space-y-1.5">
-                              <div className="flex justify-between text-xs">
-                                <span className="text-slate-400">{room.label}</span>
-                                <span className="text-white font-bold">{room.ratio}%</span>
+                            <div key={idx} className="p-4 bg-slate-800/30 rounded-2xl border border-slate-700/30 hover:bg-slate-800/50 transition-colors">
+                              <div className="flex justify-between items-start mb-2">
+                                <span className="text-xs font-bold text-slate-300">{room.label}</span>
+                                <span className="text-lg font-black text-white">{room.area} ㎡</span>
                               </div>
-                              <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-amber-500" style={{ width: `${room.ratio}%` }} />
+                              <div className="flex justify-between items-center">
+                                <span className="text-[10px] text-slate-500 font-medium">Dimension: {room.dim}</span>
+                                <div className="h-1.5 w-24 bg-slate-800 rounded-full overflow-hidden">
+                                  <div className="h-full bg-amber-500" style={{ width: `${(parseFloat(room.area) / 30) * 100}%` }} />
+                                </div>
                               </div>
                             </div>
                           ))}
                         </div>
                       </div>
 
-                      {/* Category Breakdown */}
-                      <div className="pt-4 border-t border-slate-800">
-                        <h5 className="text-sm font-bold text-slate-300 mb-4">객체 집계 (Quantity)</h5>
-                        <div className="grid gap-2">
+                      {/* Category Quantities */}
+                      <div className="pt-6 border-t border-slate-800">
+                        <h5 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-5">Object Quantity Survey</h5>
+                        <div className="grid grid-cols-2 gap-3">
                           {CATEGORIES.map(cat => (
-                            <div key={cat.id} className="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
-                              <div className="flex items-center gap-3">
-                                <div className={`w-2 h-2 rounded-full ${cat.color}`} />
-                                <span className="text-xs text-slate-400">{cat.name}</span>
-                              </div>
-                              <span className="text-xs font-bold text-white">{stats.byCategory[cat.id] || 0}</span>
+                            <div key={cat.id} className="flex items-center justify-between p-3 bg-slate-800/20 rounded-xl border border-slate-700/20">
+                              <span className="text-[10px] font-bold text-slate-400">{cat.name}</span>
+                              <span className="text-sm font-black text-white">{stats.byCategory[cat.id] || 0}</span>
                             </div>
                           ))}
                         </div>
@@ -205,8 +220,8 @@ function App() {
                     </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
-                      <Info size={40} className="text-slate-700" />
-                      <p className="text-sm text-slate-500">분석 데이터가 없습니다.<br/>라벨링을 먼저 진행해주세요.</p>
+                      <Info size={40} className="text-slate-800" />
+                      <p className="text-sm text-slate-600 font-medium">분석 데이터가 존재하지 않습니다.</p>
                     </div>
                   )}
                 </div>
@@ -216,9 +231,8 @@ function App() {
         </div>
       </main>
 
-      <footer className="py-12 border-t border-slate-900 text-center text-slate-500 text-[10px] tracking-[0.3em] font-bold uppercase">
-        <Database size={14} className="inline-block mr-3 mb-1 opacity-40 text-blue-500" />
-        Archivision AI Center • Data Engineering Service
+      <footer className="py-12 border-t border-slate-900 text-center text-slate-600 text-[10px] tracking-[0.4em] font-black uppercase">
+        Archivision • Computational Design Data Intelligence
       </footer>
     </div>
   );
