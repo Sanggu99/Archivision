@@ -2,12 +2,39 @@
   "image_name": "ilustracion-planta-result-25.jpg",
   "dimensions": { "width": 1024, "height": 724 },
   "objects": [
-    { "category": "room", "label": "OFFICE (1)", "bbox": [0.22, 0.35, 0.23, 0.45] },
-    { "category": "room", "label": "DINING/KITCHEN (4)", "bbox": [0.5, 0.22, 0.25, 0.28] },
-    { "category": "furniture", "label": "BED", "bbox": [0.76, 0.13, 0.06, 0.08] },
-    { "category": "furniture", "label": "SOFA", "bbox": [0.2, 0.585, 0.08, 0.05] },
-    { "category": "equipment", "label": "TOILET", "bbox": [0.67, 0.4, 0.04, 0.05] },
-    { "category": "door", "label": "BEDROOM DOOR", "bbox": [0.725, 0.245, 0.035, 0.06] },
-    { "category": "window", "label": "TOP WINDOW", "bbox": [0.45, 0.10, 0.6, 0.035] }
+    { "category": "room", "label": "1. OFFICE-WORKSHOP", "bbox": [0.24, 0.43, 0.18, 0.40] },
+    { "category": "room", "label": "2. LAUNDRY", "bbox": [0.16, 0.12, 0.05, 0.08] },
+    { "category": "room", "label": "3. POWDER ROOM", "bbox": [0.21, 0.12, 0.05, 0.08] },
+    { "category": "room", "label": "4. LIVING/DINING/KITCHEN", "bbox": [0.5, 0.22, 0.28, 0.28] },
+    { "category": "room", "label": "5. PATIO", "bbox": [0.5, 0.48, 0.32, 0.24] },
+    { "category": "room", "label": "6. POOL BATHROOM", "bbox": [0.68, 0.36, 0.06, 0.15] },
+    { "category": "room", "label": "7. BEDROOM", "bbox": [0.77, 0.15, 0.12, 0.15] },
+    { "category": "room", "label": "8. BATHROOM", "bbox": [0.68, 0.15, 0.06, 0.15] },
+    { "category": "room", "label": "10. MASTER BATHROOM", "bbox": [0.79, 0.35, 0.06, 0.15] },
+    { "category": "room", "label": "11. MASTER BEDROOM", "bbox": [0.73, 0.52, 0.15, 0.25] },
+    { "category": "room", "label": "12. STORAGE", "bbox": [0.83, 0.51, 0.03, 0.22] },
+
+    { "category": "furniture", "label": "OFFICE DESK", "bbox": [0.25, 0.42, 0.05, 0.15] },
+    { "category": "furniture", "label": "SOFA", "bbox": [0.2, 0.58, 0.08, 0.05] },
+    { "category": "furniture", "label": "DINING TABLE", "bbox": [0.49, 0.2, 0.06, 0.05] },
+    { "category": "furniture", "label": "KITCHEN ISLAND", "bbox": [0.6, 0.2, 0.03, 0.18] },
+    { "category": "furniture", "label": "BED (7)", "bbox": [0.76, 0.13, 0.06, 0.08] },
+    { "category": "furniture", "label": "BED (11)", "bbox": [0.77, 0.52, 0.06, 0.08] },
+
+    { "category": "equipment", "label": "TOILET (3)", "bbox": [0.21, 0.11, 0.02, 0.03] },
+    { "category": "equipment", "label": "TOILET (6)", "bbox": [0.69, 0.35, 0.02, 0.03] },
+    { "category": "equipment", "label": "TOILET (8)", "bbox": [0.67, 0.13, 0.02, 0.03] },
+    { "category": "equipment", "label": "TOILET (10)", "bbox": [0.79, 0.38, 0.02, 0.03] },
+    { "category": "equipment", "label": "SINK (10)", "bbox": [0.79, 0.32, 0.02, 0.03] },
+
+    { "category": "door", "label": "ENTRANCE", "bbox": [0.18, 0.24, 0.03, 0.05] },
+    { "category": "door", "label": "DOOR 1-4", "bbox": [0.35, 0.29, 0.03, 0.01] },
+    { "category": "door", "label": "DOOR 7", "bbox": [0.73, 0.24, 0.03, 0.05] },
+    { "category": "door", "label": "DOOR 8", "bbox": [0.71, 0.18, 0.03, 0.03] },
+    { "category": "door", "label": "DOOR 11", "bbox": [0.74, 0.39, 0.03, 0.05] },
+    { "category": "door", "label": "FOLDING DOORS", "bbox": [0.5, 0.61, 0.3, 0.03] },
+
+    { "category": "window", "label": "TOP WINDOWS", "bbox": [0.45, 0.08, 0.65, 0.02] },
+    { "category": "window", "label": "OFFICE WINDOW", "bbox": [0.18, 0.45, 0.01, 0.35] }
   ]
 }
