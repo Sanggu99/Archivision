@@ -1,7 +1,31 @@
 {
   "image_name": "도면테스트.png",
-  "dimensions": { "width": 800, "height": 600 },
+  "dimensions": { "width": 1000, "height": 700 },
   "objects": [
-    { "category": "door", "label": "DOOR", "bbox": [0.5, 0.5, 0.05, 0.05] }
+    { "category": "room", "label": "BEDROOM 1 (7.8m2)", "bbox": [0.18, 0.22, 0.25, 0.38] },
+    { "category": "room", "label": "BEDROOM 2 (7.9m2)", "bbox": [0.5, 0.22, 0.3, 0.38] },
+    { "category": "room", "label": "BATHROOM (5.5m2)", "bbox": [0.82, 0.22, 0.22, 0.38] },
+    { "category": "room", "label": "LIVING/KITCHEN (24.1m2)", "bbox": [0.45, 0.65, 0.7, 0.45] },
+
+    { "category": "furniture", "label": "BED (RM1)", "bbox": [0.19, 0.18, 0.12, 0.18] },
+    { "category": "furniture", "label": "BED (RM2)", "bbox": [0.55, 0.18, 0.12, 0.18] },
+    { "category": "furniture", "label": "L-SOFA", "bbox": [0.34, 0.68, 0.12, 0.35] },
+    { "category": "furniture", "label": "DINING TABLE", "bbox": [0.73, 0.65, 0.08, 0.18] },
+    { "category": "furniture", "label": "TV STAND", "bbox": [0.09, 0.68, 0.05, 0.28] },
+
+    { "category": "equipment", "label": "BATHTUB", "bbox": [0.82, 0.13, 0.2, 0.12] },
+    { "category": "equipment", "label": "TOILET", "bbox": [0.9, 0.25, 0.04, 0.06] },
+    { "category": "equipment", "label": "SINK (BATH)", "bbox": [0.91, 0.38, 0.04, 0.08] },
+    { "category": "equipment", "label": "KITCHEN SINK", "bbox": [0.9, 0.64, 0.04, 0.08] },
+    { "category": "equipment", "label": "STOVE", "bbox": [0.88, 0.88, 0.06, 0.08] },
+
+    { "category": "door", "label": "ENTRANCE (DBL)", "bbox": [0.58, 0.85, 0.14, 0.13] },
+    { "category": "door", "label": "DOOR RM1", "bbox": [0.34, 0.38, 0.06, 0.08] },
+    { "category": "door", "label": "DOOR RM2", "bbox": [0.63, 0.38, 0.06, 0.08] },
+    { "category": "door", "label": "DOOR BATH", "bbox": [0.73, 0.41, 0.03, 0.05] },
+
+    { "category": "window", "label": "TOP WINDOW", "bbox": [0.33, 0.05, 0.05, 0.01] },
+    { "category": "window", "label": "BOTTOM WINDOW", "bbox": [0.33, 0.93, 0.15, 0.01] },
+    { "category": "window", "label": "SIDE WINDOW", "bbox": [0.93, 0.85, 0.01, 0.15] }
   ]
 }
